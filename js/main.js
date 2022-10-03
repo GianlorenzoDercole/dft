@@ -1100,7 +1100,6 @@ function detectcol(){
 
             }
         }
-
     }
     let wordsArray = ['more fruit', 'my favorite', 'yum yum']
     // detect fire collision
@@ -1113,8 +1112,8 @@ function detectcol(){
             ){
                 dragonArray[i].alive = false
                 flames.alive = false
-                dragonArray.pop(dragonArray[i])
-                dragonArray.push(dragonArray[i])
+                // dragonArray.pop(dragonArray[i])
+                // dragonArray.push(dragonArray[i])
                 dragonArray[i].x = canvas.width + 1000
                 dragonArray[i].alive = true
 
@@ -1132,8 +1131,8 @@ function detectcol(){
             foodArray[i].alive = false
             score += 100
             movementDisplay.innerText = wordsArray[Math.floor(Math.random() * 3)]
-            foodArray.pop(foodArray[i])
-            foodArray.push(foodArray[i])
+            // foodArray.pop(foodArray[i])
+            // foodArray.push(foodArray[i])
             foodArray[i].x = canvas.width + 1000
             foodArray[i].alive = true
         }
@@ -1181,14 +1180,15 @@ function gameLoop(){
 
     // move food across the screen
     for (let i = 0 ; i < foodArray.length; i++){
-        if (foodArray[i].alive && dragon.alive){
+        if (dragon.alive && foodArray[i].alive ){
 
-            foodArray[i].render()
             foodArray[i].x -=5
+            foodArray[i].render()
+
         }
         if(foodArray[i].x < -30){
-            foodArray.pop(foodArray[i])
-            foodArray.push(foodArray[i])
+            // foodArray.pop(foodArray[i])
+            // foodArray.push(foodArray[i])
             foodArray[i].x = canvas.width + 1000
         }
 
@@ -1198,12 +1198,13 @@ function gameLoop(){
     // render dragons and move them across the screen
     for (let i = 0 ; i < dragonArray.length; i++){
         if(dragon.alive == true && dragonArray[i].alive == true ){
-            dragonArray[i].render()
             dragonArray[i].x -= 10
+            dragonArray[i].render()
+
         }
         if(dragonArray[i].x < -30){
-            dragonArray.pop(dragonArray[i])
-            dragonArray.push(dragonArray[i])
+            // dragonArray.pop(dragonArray[i])
+            // dragonArray.push(dragonArray[i])
             dragonArray[i].x = canvas.width + 1000
         }
     }
