@@ -916,7 +916,6 @@ const gameLoopInterval = setInterval(gameLoop, 60)
 message = document.querySelector('#btm-right')
 
 
-
 // FinishLine class is used for building finish line
 class FinishLine {
     constructor(x, y, color, width, height){
@@ -935,12 +934,11 @@ class FinishLine {
 }
 // pic class is used for the player dragon and template for other classes
 class Pic {
-    constructor(x, y, width, height, im) {
+    constructor(x, y, width, height) {
         this.x = x
         this.y = y
         const image = new Image()
-        im = './images/d2.png'
-        image.src = im
+        image.src = './images/d2.png'
         this.image = image
         this.height = 30
         this.width = 30
@@ -1008,6 +1006,7 @@ flames.alive = false
 // food array is used to store fruit that will later cross screen
 const foodArray = []
 let piecesOfFruit = 2
+// fooda functio adds fruit to the food array
 function foods() {
     for (let i = 0; i < piecesOfFruit; i++){
          foodArray.push(food = new Food(Math.floor(Math.random() * (canvas.width )+ 1000), Math.floor(Math.random() * canvas.height)))
@@ -1015,23 +1014,21 @@ function foods() {
         }
 }
 
-
 // add all the food the foods array
 foods()
 // finish line comes after all the dragons
 const finishLine = new FinishLine((canvas.width + 11000), 0, 'white', 30, canvas.height )
 // dragon array is used to store dragons which will later cross the screen
 const dragonArray = []
-
-// the dragons functions add fleets of dragons the dragon array at different coordinates
+// the dragons function add a fleet of dragons the dragon array
 let numberOfDragons = 11
 function dragons() {
         for (let i = 0; i < numberOfDragons; i++){
-             dragonArray.push(badDragon = new Baddragon(Math.floor(Math.random() * (canvas.width )+ 1000), Math.floor(Math.random() * canvas.height), 'green', 30, 30))
-             dragonArray.push(badDragon = new Baddragon(Math.floor(Math.random() * (canvas.width )+ 2000), Math.floor(Math.random() * canvas.height), 'green', 30, 30))
+             dragonArray.push(badDragon = new Baddragon(Math.floor(Math.random() * (canvas.width )+ 1000), Math.floor(Math.random() * canvas.height)))
+             dragonArray.push(badDragon = new Baddragon(Math.floor(Math.random() * (canvas.width )+ 2000), Math.floor(Math.random() * canvas.height)))
             }
     }
-// add all the dragons the dragon array
+// add all the dragons to the dragon array
 dragons()
 
 // stars array is used to store stars which will later move across the screen
@@ -1040,8 +1037,8 @@ let numberOfStars = 110
 function bgnstars() {
 
     for (let i = 0; i < numberOfStars; i++){
-        stars.push(badDragon = new Star(Math.floor(Math.random() * (canvas.width )), Math.floor(Math.random() * canvas.height), 'green', 30, 30))
-        stars.push(badDragon = new Star(Math.floor(Math.random() * (canvas.width )+ 1000), Math.floor(Math.random() * canvas.height), 'green', 30, 30))
+        stars.push(badDragon = new Star(Math.floor(Math.random() * (canvas.width )), Math.floor(Math.random() * canvas.height)))
+        stars.push(badDragon = new Star(Math.floor(Math.random() * (canvas.width )+ 1000), Math.floor(Math.random() * canvas.height)))
     }
 }
 bgnstars()
@@ -1112,8 +1109,6 @@ function detectcol(){
             ){
                 dragonArray[i].alive = false
                 flames.alive = false
-                // dragonArray.pop(dragonArray[i])
-                // dragonArray.push(dragonArray[i])
                 dragonArray[i].x = canvas.width + 1000
                 dragonArray[i].alive = true
 
@@ -1131,8 +1126,6 @@ function detectcol(){
             foodArray[i].alive = false
             score += 100
             movementDisplay.innerText = wordsArray[Math.floor(Math.random() * 3)]
-            // foodArray.pop(foodArray[i])
-            // foodArray.push(foodArray[i])
             foodArray[i].x = canvas.width + 1000
             foodArray[i].alive = true
         }
@@ -1141,7 +1134,9 @@ function detectcol(){
 
 }
 
-score = 0
+// score will update when player eats dragon fruit
+let score = 0
+
 // logic for running the game
 function gameLoop(){
 
@@ -1156,18 +1151,11 @@ function gameLoop(){
     // move finish line towards player
     finishLine.x -= 10
 
-    // render foode if game not over
-    if( food.alive == true && dragon.alive == true) {
-        food.render()
-    }
-
     // render stars and move them across the screen
 
     for (let i = 0 ; i < stars.length; i++){
 
         if(dragon.alive){
-
-
             stars[i].x -= 2
             stars[i].render()
         }
@@ -1187,13 +1175,10 @@ function gameLoop(){
 
         }
         if(foodArray[i].x < -30){
-            // foodArray.pop(foodArray[i])
-            // foodArray.push(foodArray[i])
             foodArray[i].x = canvas.width + 1000
         }
 
     }
-
 
     // render dragons and move them across the screen
     for (let i = 0 ; i < dragonArray.length; i++){
@@ -1203,8 +1188,6 @@ function gameLoop(){
 
         }
         if(dragonArray[i].x < -30){
-            // dragonArray.pop(dragonArray[i])
-            // dragonArray.push(dragonArray[i])
             dragonArray[i].x = canvas.width + 1000
         }
     }
@@ -1216,8 +1199,6 @@ function gameLoop(){
 
     // display score
     scoreDisplay.innerText = score
-
-    // keep track of player score
 
     // collision detection for walls food fire and dragons
     detectcol()
